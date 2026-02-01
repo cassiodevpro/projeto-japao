@@ -1,44 +1,42 @@
 version: '3.8'
+
 services:
   mysql:
     image: mysql:8
-    container_name: hiragana
+    container_name: hiragana-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root@123
       MYSQL_DATABASE: hiragana
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 
     ports:
-      - "3306:3306"
+      - "3307:3306"  # Porta 3307 no host para não conflitar com MySQL local
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - minha_rede
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot@123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build: .
+    container_name: hiragana-app
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     ports:
       - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/hiragana?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
-      SPRING_JPA_SHOW_SQL: "true"
-      SERVER_PORT: 8080
-      JWT_SECRET: secretaoqueusamudarnoprod
-      JWT_EXPIRATION: 86400000
+      SPRING_DATASOURCE_PASSWORD: root@123
     networks:
       - minha_rede
+    restart: unless-stopped
 
 volumes:
   mysql_data:
-    driver: local
 
 networks:
   minha_rede:
