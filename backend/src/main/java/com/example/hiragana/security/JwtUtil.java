@@ -1,8 +1,12 @@
 package com.example.hiragana.security;
 
-import java.sql.Date;
+import java.time.Instant;
+import java.util.Date;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,17 +19,24 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long EXPIRATION;
 
+    private SecretKey getSigningKey() {
+        // Recomenda-se utilizar chaves geradas através do Keys.hmacShaKeyFor
+        return Keys.hmacShaKeyFor(SECRET.getBytes());
+    }
+
     public String generateToken(String username) {
+        Instant expirationTime = Instant.now().plusMillis(EXPIRATION);
         return Jwts.builder()
             .setSubject(username)
-            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-            .signWith(SignatureAlgorithm.HS512, SECRET)
+            .setExpiration(Date.from(expirationTime))
+            .signWith(getSigningKey(), SignatureAlgorithm.HS512)
             .compact();
     }
 
     public String getUsernameFromToken(String token) {
-        return Jwts.parser()
-            .setSigningKey(SECRET)
+        return Jwts.parserBuilder()
+            .setSigningKey(getSigningKey())
+            .build()
             .parseClaimsJws(token)
             .getBody()
             .getSubject();

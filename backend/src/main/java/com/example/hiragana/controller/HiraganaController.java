@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/hiragana") // Adiciona o prefixo '/api/'
+@RequestMapping("/api/hiragana") // Caminho base "/api/hiragana"
 public class HiraganaController {
 
     @Autowired

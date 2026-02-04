@@ -1,7 +1,5 @@
 package com.example.hiragana.model;
 
-
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -16,81 +14,49 @@ public class Hiragana {
     @Column(nullable = false, length = 10)
     private String caractere;
 
-    @Column(nullable = false, length = 20)
-    private String leitura;
+    @Column(nullable = false, length = 10)
+    private String romaji;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 10)
     private String grupo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private Tipo tipo;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
     public enum Tipo {
-        BASICO, DAKUTEN, HANDAKUTEN
+        basico, dakuten, handakuten
     }
 
-    public Integer getId() {
-        return id;
-    }
+    public Hiragana() {}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCaractere() {
-        return caractere;
-    }
-
-    public void setCaractere(String caractere) {
-        this.caractere = caractere;
-    }
-
-    public String getLeitura() {
-        return leitura;
-    }
-
-    public void setLeitura(String leitura) {
-        this.leitura = leitura;
-    }
-
-    public String getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
-    }
-
-    public Tipo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Hiragana(Integer id, String caractere, String leitura, String grupo, Tipo tipo, LocalDateTime createdAt) {
+    public Hiragana(Integer id, String caractere, String romaji, String grupo, Tipo tipo, LocalDateTime createdAt) {
         this.id = id;
         this.caractere = caractere;
-        this.leitura = leitura;
+        this.romaji = romaji;
         this.grupo = grupo;
         this.tipo = tipo;
         this.createdAt = createdAt;
     }
 
-    public Hiragana() {
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
+    public String getCaractere() { return caractere; }
+    public void setCaractere(String caractere) { this.caractere = caractere; }
+
+    public String getRomaji() { return romaji; }
+    public void setRomaji(String romaji) { this.romaji = romaji; }
+
+    public String getGrupo() { return grupo; }
+    public void setGrupo(String grupo) { this.grupo = grupo; }
+
+    public Tipo getTipo() { return tipo; }
+    public void setTipo(Tipo tipo) { this.tipo = tipo; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

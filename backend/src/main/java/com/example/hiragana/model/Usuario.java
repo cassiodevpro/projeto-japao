@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
@@ -15,18 +16,23 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private LocalDateTime createdAt;
 
     public Usuario() {
     }
 
-    public Usuario(Long id, String username, String password) {
+    public Usuario(Long id, String username, String password, LocalDateTime createdAt) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -51,5 +57,9 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
