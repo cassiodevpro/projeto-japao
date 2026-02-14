@@ -24,7 +24,7 @@ export default function Header() {
           <div className="dsc-menu-items-container">
             <div className="dsc-menu-item">
                 <img
-                    src="/assets/logo/logo.svg"
+                    src="/assets/logo/logo.png"
                     alt="Flow"
                     style={{ width: 72, height: 72
                      }}

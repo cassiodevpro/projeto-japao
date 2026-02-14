@@ -15,7 +15,7 @@ export default function HomePage() {
         <div className="flex justify-center">
           <div className="relative">
             <img
-              src="/assets/logo/logo.svg"
+              src="/assets/logo/logo.png"
               alt="Raposa"
               className="w-10 h-10 mx-auto"
             />           
