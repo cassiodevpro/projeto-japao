@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_JAPANESE_API_URL || "hhttps://projeto-japao.vercel.app/api";
+const API_URL = process.env.NEXT_PUBLIC_JAPANESE_API_URL || "https://projeto-japao.vercel.app/api";
 
 if (!API_URL) {
   throw new Error("NEXT_PUBLIC_JAPANESE_API_URL não definida");
