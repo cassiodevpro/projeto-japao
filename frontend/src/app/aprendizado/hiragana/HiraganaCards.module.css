@@ -4,10 +4,21 @@
 }
 
 .cardsContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 20px;
   margin-top: 24px;
-  justify-content: center; /* Centraliza os cards horizontalmente */
+  justify-items: center;
+  width: 100%;
+}
+
+/* Grid para exibir cards em colunas (usado em números) */
+.cardsGridColumns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-top: 24px;
 }
 
 .card {

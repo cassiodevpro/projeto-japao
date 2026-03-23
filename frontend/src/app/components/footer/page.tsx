@@ -1,10 +1,18 @@
 export default function Footer() {
   return (
-    <footer className="dsc-footer-client">
-      <div className="dsc-container">
-        <p className="text-center text-gray-500 dark:text-gray-400 py-4">
-          &copy; 2024 Projeto Japão. Todos os direitos reservados.
-        </p>
+    <footer style={{
+      background: 'rgba(201,168,76,0.08)',
+      borderTop: '1px solid rgba(201,168,76,0.13)',
+      fontFamily: 'Crimson Pro, Georgia, serif',
+      color: 'var(--muted)',
+      padding: '2.2rem 0 1.2rem',
+      marginTop: 32,
+      textAlign: 'center',
+      fontSize: '1.05rem',
+      letterSpacing: '0.08em',
+    }}>
+      <div>
+        <span style={{ color: 'var(--gold)', fontWeight: 600 }}>&copy; 2024 Projeto Japão</span> — Todos os direitos reservados.
       </div>
     </footer>
   );

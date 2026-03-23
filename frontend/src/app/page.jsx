@@ -1,43 +1,58 @@
-import Headers from "@/app/components/header";
-import Footer from "@/app/components/footer/page";
+import styles from "./home.module.css";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <>
-      <Headers />
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-950 transition-colors">
-        {/* Card */}
-        <div className="w-[420px] max-w-full rounded-3xl bg-white dark:bg-gray-900 shadow-xl p-8 text-center transition-colors">
-          {/* Mascote */}
-          <div className="flex justify-center">
-            <div className="relative">
-              <img
-                src="/assets/logo/logo.png"
-                alt="Raposa"
-                className="w-10 h-10 mx-auto"
-              />
-            </div>
-          </div>
-          {/* Título */}
-          <h1 className="text-3xl font-extrabold mb-6">
-            Hiragana Flow
-          </h1>
-          {/* Botão */}
-          <button className="w-full py-4 rounded-full text-white text-lg font-semibold 
-            bg-gradient-to-r from-indigo-500 to-purple-500 
-            hover:opacity-90 transition mb-4">
-            Continuar de onde parei
-          </button>
-          {/* Progresso */}
-          <p className="text-sm text-gray-500 dark:text-gray-300 mb-2">
-            Você já domina 12/46 caracteres
+    <div className={styles.homeBg}>
+      {/* Noise overlay */}
+      <div className={styles.noiseOverlay} aria-hidden="true" />
+      <div className={styles.verticalDeco}>日本語学習ガイド</div>
+      <header className={styles.header}>
+        <div className={styles.headerJp}>日本語</div>
+        <div className={styles.headerSub}>Guia de Estudo — Japonês</div>
+        <div className={styles.headerLine}></div>
+      </header>
+      <nav className={styles.tabs}>
+        <Link href="/aprendizado/hiragana" className={styles.tabBtn + ' ' + styles.tabActive}>
+          <span className={styles.jpLabel}>ひらがな</span>
+          <span className={styles.ptLabel}>Hiragana</span>
+        </Link>
+        <Link href="/aprendizado/katakana" className={styles.tabBtn}>
+          <span className={styles.jpLabel}>カタカナ</span>
+          <span className={styles.ptLabel}>Katakana</span>
+        </Link>
+        <Link href="/aprendizado/kanji" className={styles.tabBtn}>
+          <span className={styles.jpLabel}>漢字</span>
+          <span className={styles.ptLabel}>Kanji</span>
+        </Link>
+        <Link href="/aprendizado/numeros" className={styles.tabBtn}>
+          <span className={styles.jpLabel}>数字</span>
+          <span className={styles.ptLabel}>Números</span>
+        </Link>
+      </nav>
+      {/* Conteúdo central */}
+      <main style={{ maxWidth: 700, margin: "0 auto", padding: "0 1.5rem 4rem" }}>
+        <div style={{
+          background: "rgba(245,237,224,0.05)",
+          border: "1px solid rgba(245,237,224,0.1)",
+          borderRadius: 12,
+          padding: "2.5rem 2rem 2rem",
+          textAlign: "center",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+          marginTop: "2.5rem"
+        }}>
+          <img src="/assets/logo/logo.svg" alt="Raposa" style={{ width: 56, height: 56, margin: "0 auto 1.2rem" }} />
+          <h2 style={{ fontFamily: 'Noto Serif JP, serif', fontWeight: 400, fontSize: '2.1rem', color: 'var(--gold)', marginBottom: 8 }}>Bem-vindo!</h2>
+          <p style={{ color: 'var(--muted)', fontSize: '1.1rem', marginBottom: 18 }}>
+            Explore o guia visual para aprender Hiragana, Katakana, Kanji e Números japoneses.<br />
+            Clique em cada aba acima para começar!
           </p>
-          <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div className="h-full w-[26%] bg-gradient-to-r from-pink-400 to-pink-500 rounded-full" />
+          <div style={{ margin: '2.5rem 0 0.5rem' }}>
+            <span style={{ color: 'var(--gold)', fontWeight: 700, fontSize: '1.2rem' }}>日本語</span>
+            <span style={{ color: 'var(--muted)', marginLeft: 8, fontSize: '1.1rem' }}>nihongo</span>
           </div>
         </div>
-      </div>
-      <Footer />
-    </>
+      </main>
+    </div>
   );
 }
