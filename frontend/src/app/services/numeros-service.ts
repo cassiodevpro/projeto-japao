@@ -4,6 +4,7 @@ export interface Numero {
   id: number;
   numero: number;
   japones: string;
+  hiragana: string;
   romaji: string;
   tipo: string;
 }

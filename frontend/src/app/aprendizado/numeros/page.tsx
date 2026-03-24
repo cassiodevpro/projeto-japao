@@ -117,7 +117,8 @@ export default function AprendizadoNumeros() {
                       <div className={styles.cardFront}>{n.japones}</div>
                       <div className={styles.cardBack}>
                         <div style={{ fontWeight: "bold", fontSize: "1.5rem", marginBottom: 8 }}>{n.romaji}</div>
-                        <div style={{ fontSize: "1.1rem", color: "#333", marginBottom: 8 }}>Número: {n.numero}</div>
+                        <div style={{ fontSize: "1.1rem", color: "#333", marginBottom: 8 }}>Hiragana: <span style={{ fontWeight: 600 }}>{n.hiragana || '-'}</span></div>
+                        <div style={{ fontSize: "1rem", color: "#333", marginBottom: 8 }}>Número: {n.numero}</div>
                       </div>
                     </div>
                   </div>
