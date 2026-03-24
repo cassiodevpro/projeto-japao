@@ -74,11 +74,10 @@ export default function KatakanaClient() {
                     <div className={styles.cardBack}>
                       <div style={{ fontWeight: "bold", fontSize: "1.5rem", marginBottom: 8 }}>{card.romaji.toUpperCase()}</div>
                       <div style={{ fontSize: "1.1rem", color: "#333", marginBottom: 8 }}>
-                        {/* Tradução pt-br mock */}
-                        {card.caractere === "ア" ? "A (exemplo: アイス - sorvete)" : card.caractere === "イ" ? "I (exemplo: イヌ - cachorro)" : "Tradução"}
+                        Exemplo:
                       </div>
                       <div style={{ fontSize: "1rem", color: "#666" }}>
-                        Exemplo: {card.caractere === "ア" ? "アイス" : card.caractere === "イ" ? "イヌ" : "-"}
+                        {card.examples && card.examples.length > 0 ? card.examples[0] : "-"}
                       </div>
                     </div>
                   </div>

@@ -79,6 +79,7 @@
   background: #f0f0f0;
   transform: rotateY(180deg);
   font-size: 1.2rem;
+  color: var(--ink);
 }
 
 /* Cores para cada grupo */

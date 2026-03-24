@@ -7,7 +7,7 @@ export async function apiGet<T>(
   // Simula dados de acordo com a tabela
   const table = params?.table as string;
   if (table === "hiragana") {
-    // Tabela completa de hiragana gojuon + diacríticos básicos
+    // Tabela completa de hiragana: gojuon, dakuten, handakuten, yoon (junções)
     const gojuon = [
       ["あ", "a"], ["い", "i"], ["う", "u"], ["え", "e"], ["お", "o"],
       ["か", "ka"], ["き", "ki"], ["く", "ku"], ["け", "ke"], ["こ", "ko"],
@@ -20,22 +20,72 @@ export async function apiGet<T>(
       ["ら", "ra"], ["り", "ri"], ["る", "ru"], ["れ", "re"], ["ろ", "ro"],
       ["わ", "wa"], ["を", "wo"], ["ん", "n"]
     ];
+    const dakuten = [
+      ["が", "ga"], ["ぎ", "gi"], ["ぐ", "gu"], ["げ", "ge"], ["ご", "go"],
+      ["ざ", "za"], ["じ", "ji"], ["ず", "zu"], ["ぜ", "ze"], ["ぞ", "zo"],
+      ["だ", "da"], ["ぢ", "ji"], ["づ", "zu"], ["で", "de"], ["ど", "do"],
+      ["ば", "ba"], ["び", "bi"], ["ぶ", "bu"], ["べ", "be"], ["ぼ", "bo"]
+    ];
+    const handakuten = [
+      ["ぱ", "pa"], ["ぴ", "pi"], ["ぷ", "pu"], ["ぺ", "pe"], ["ぽ", "po"]
+    ];
+    const yoon = [
+      ["きゃ", "kya"], ["きゅ", "kyu"], ["きょ", "kyo"],
+      ["しゃ", "sha"], ["しゅ", "shu"], ["しょ", "sho"],
+      ["ちゃ", "cha"], ["ちゅ", "chu"], ["ちょ", "cho"],
+      ["にゃ", "nya"], ["にゅ", "nyu"], ["にょ", "nyo"],
+      ["ひゃ", "hya"], ["ひゅ", "hyu"], ["ひょ", "hyo"],
+      ["みゃ", "mya"], ["みゅ", "myu"], ["みょ", "myo"],
+      ["りゃ", "rya"], ["りゅ", "ryu"], ["りょ", "ryo"],
+      ["ぎゃ", "gya"], ["ぎゅ", "gyu"], ["ぎょ", "gyo"],
+      ["じゃ", "ja"], ["じゅ", "ju"], ["じょ", "jo"],
+      ["びゃ", "bya"], ["びゅ", "byu"], ["びょ", "byo"],
+      ["ぴゃ", "pya"], ["ぴゅ", "pyu"], ["ぴょ", "pyo"]
+    ];
     // Exemplos simples
     const exemplos: Record<string, string> = {
       "あ": "あさ (manhã)", "い": "いぬ (cachorro)", "う": "うみ (mar)", "え": "えき (estação)", "お": "おにぎり (bolinho)",
       "か": "かさ (guarda-chuva)", "き": "き (árvore)", "く": "くるま (carro)", "け": "けむし (lagarta)", "こ": "こども (criança)"
     };
-    return Promise.resolve({
-      table: "hiragana",
-      total: gojuon.length,
-      data: gojuon.map(([caractere, romaji], i) => ({
-        id: i + 1,
+    let idx = 0;
+    const all = [
+      ...gojuon.map(([caractere, romaji]) => ({
+        id: ++idx,
         caractere,
         romaji,
         grupo: romaji[0],
         tipo: "gojuon",
         examples: [exemplos[caractere] || "exemplo"]
       })),
+      ...dakuten.map(([caractere, romaji]) => ({
+        id: ++idx,
+        caractere,
+        romaji,
+        grupo: romaji[0],
+        tipo: "dakuten",
+        examples: ["exemplo dakuten"]
+      })),
+      ...handakuten.map(([caractere, romaji]) => ({
+        id: ++idx,
+        caractere,
+        romaji,
+        grupo: romaji[0],
+        tipo: "handakuten",
+        examples: ["exemplo handakuten"]
+      })),
+      ...yoon.map(([caractere, romaji]) => ({
+        id: ++idx,
+        caractere,
+        romaji,
+        grupo: romaji[0],
+        tipo: "yoon",
+        examples: ["exemplo yoon"]
+      }))
+    ];
+    return Promise.resolve({
+      table: "hiragana",
+      total: all.length,
+      data: all,
     } as T);
   }
   if (table === "katakana") {
@@ -75,8 +125,37 @@ export async function apiGet<T>(
       ["ビャ", "bya"], ["ビュ", "byu"], ["ビョ", "byo"],
       ["ピャ", "pya"], ["ピュ", "pyu"], ["ピョ", "pyo"]
     ];
+    // Exemplos reais para todos os katakana
     const exemplos: Record<string, string> = {
-      "ア": "アイス (sorvete)", "イ": "イヌ (cachorro)", "ウ": "ウサギ (coelho)", "エ": "エビ (camarão)", "オ": "オレンジ (laranja)"
+      "ア": "アイス (sorvete)", "イ": "イヌ (cachorro)", "ウ": "ウサギ (coelho)", "エ": "エビ (camarão)", "オ": "オレンジ (laranja)",
+      "カ": "カメ (tartaruga)", "キ": "キツネ (raposa)", "ク": "クマ (urso)", "ケ": "ケーキ (bolo)", "コ": "コアラ (coala)",
+      "サ": "サル (macaco)", "シ": "シカ (veado)", "ス": "スイカ (melancia)", "セ": "セミ (cigarra)", "ソ": "ソファ (sofá)",
+      "タ": "タコ (polvo)", "チ": "チーズ (queijo)", "ツ": "ツバメ (andorinha)", "テ": "テーブル (mesa)", "ト": "トマト (tomate)",
+      "ナ": "ナス (berinjela)", "ニ": "ニワトリ (galinha)", "ヌ": "ヌードル (macarrão)", "ネ": "ネコ (gato)", "ノ": "ノート (caderno)",
+      "ハ": "ハチ (abelha)", "ヒ": "ヒツジ (ovelha)", "フ": "フクロウ (coruja)", "ヘ": "ヘビ (cobra)", "ホ": "ホタル (vaga-lume)",
+      "マ": "マグロ (atum)", "ミ": "ミカン (tangerina)", "ム": "ムシ (inseto)", "メ": "メガネ (óculos)", "モ": "モモ (pêssego)",
+      "ヤ": "ヤギ (cabra)", "ユ": "ユニコーン (unicórnio)", "ヨ": "ヨット (iate)",
+      "ラ": "ライオン (leão)", "リ": "リス (esquilo)", "ル": "ルビー (rubi)", "レ": "レモン (limão)", "ロ": "ロボット (robô)",
+      "ワ": "ワニ (jacaré)", "ヲ": "ヲタク (otaku)", "ン": "パン (pão)",
+      // Dakuten
+      "ガ": "ガラス (vidro)", "ギ": "ギター (guitarra)", "グ": "グミ (bala de gelatina)", "ゲ": "ゲーム (jogo)", "ゴ": "ゴリラ (gorila)",
+      "ザ": "ザリガニ (lagostim)", "ジ": "ジーンズ (jeans)", "ズ": "ズボン (calça)", "ゼ": "ゼリー (gelatina)", "ゾ": "ゾウ (elefante)",
+      "ダ": "ダイヤ (diamante)", "ヂ": "ヂカラ (força)", "ヅ": "ヅメ (unha)", "デ": "デザート (sobremesa)", "ド": "ドア (porta)",
+      "バ": "バナナ (banana)", "ビ": "ビール (cerveja)", "ブ": "ブタ (porco)", "ベ": "ベッド (cama)", "ボ": "ボール (bola)",
+      // Handakuten
+      "パ": "パンダ (panda)", "ピ": "ピアノ (piano)", "プ": "プリン (pudim)", "ペ": "ペン (caneta)", "ポ": "ポスト (caixa de correio)",
+      // Yoon (junções)
+      "キャ": "キャベツ (repolho)", "キュ": "キュウリ (pepino)", "キョ": "キョウリュウ (dinossauro)",
+      "シャ": "シャツ (camisa)", "シュ": "シュート (chute)", "ショ": "ショート (curto)",
+      "チャ": "チャーハン (arroz frito)", "チュ": "チューリップ (tulipa)", "チョ": "チョコ (chocolate)",
+      "ニャ": "ニャンコ (gatinho)", "ニュ": "ニュース (notícia)", "ニョ": "ニョロニョロ (serpenteando)",
+      "ヒャ": "ヒャクエン (100 ienes)", "ヒュ": "ヒューマン (humano)", "ヒョ": "ヒョウ (leopardo)",
+      "ミャ": "ミャク (pulso)", "ミュ": "ミュージック (música)", "ミョ": "ミョウガ (gengibre japonês)",
+      "リャ": "リャク (abreviação)", "リュ": "リュック (mochila)", "リョ": "リョウリ (culinária)",
+      "ギャ": "ギャグ (piada)", "ギュ": "ギュウニュウ (leite)", "ギョ": "ギョウザ (guioza)",
+      "ジャ": "ジャム (geleia)", "ジュ": "ジュース (suco)", "ジョ": "ジョギング (corrida)",
+      "ビャ": "ビャクヤ (noite branca)", "ビュ": "ビュッフェ (buffet)", "ビョ": "ビョウイン (hospital)",
+      "ピャ": "ピアス (brinco)", "ピュ": "ピューマ (puma)", "ピョ": "ピョンピョン (saltando)"
     };
     let idx = 0;
     const all = [
@@ -86,7 +165,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "letra",
-        examples: [exemplos[caractere] || "exemplo"]
+        examples: [exemplos[caractere] || "-"]
       })),
       ...dakuten.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -94,7 +173,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "dakuten",
-        examples: ["exemplo dakuten"]
+        examples: [exemplos[caractere] || "-"]
       })),
       ...handakuten.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -102,7 +181,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "handakuten",
-        examples: ["exemplo handakuten"]
+        examples: [exemplos[caractere] || "-"]
       })),
       ...yoon.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -110,7 +189,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "yoon",
-        examples: ["exemplo yoon"]
+        examples: [exemplos[caractere] || "-"]
       }))
     ];
     return Promise.resolve({

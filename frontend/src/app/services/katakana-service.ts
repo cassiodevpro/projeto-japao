@@ -6,6 +6,7 @@ export interface Katakana {
   romaji: string;
   grupo: string;
   tipo: string;
+  examples: string[];
 }
 
 export interface KatakanaResponse {
