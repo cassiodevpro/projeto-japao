@@ -7,6 +7,7 @@ export interface Katakana {
   grupo: string;
   tipo: string;
   examples: string[];
+  hiragana: string;
 }
 
 export interface KatakanaResponse {

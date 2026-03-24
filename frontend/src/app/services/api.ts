@@ -90,6 +90,38 @@ export async function apiGet<T>(
   }
   if (table === "katakana") {
     // Katakana completo: gojuon, dakuten, handakuten, yoon (junções)
+    // Katakana para hiragana
+    const katakanaToHiragana: Record<string, string> = {
+      "ア": "あ", "イ": "い", "ウ": "う", "エ": "え", "オ": "お",
+      "カ": "か", "キ": "き", "ク": "く", "ケ": "け", "コ": "こ",
+      "サ": "さ", "シ": "し", "ス": "す", "セ": "せ", "ソ": "そ",
+      "タ": "た", "チ": "ち", "ツ": "つ", "テ": "て", "ト": "と",
+      "ナ": "な", "ニ": "に", "ヌ": "ぬ", "ネ": "ね", "ノ": "の",
+      "ハ": "は", "ヒ": "ひ", "フ": "ふ", "ヘ": "へ", "ホ": "ほ",
+      "マ": "ま", "ミ": "み", "ム": "む", "メ": "め", "モ": "も",
+      "ヤ": "や", "ユ": "ゆ", "ヨ": "よ",
+      "ラ": "ら", "リ": "り", "ル": "る", "レ": "れ", "ロ": "ろ",
+      "ワ": "わ", "ヲ": "を", "ン": "ん",
+      // Dakuten
+      "ガ": "が", "ギ": "ぎ", "グ": "ぐ", "ゲ": "げ", "ゴ": "ご",
+      "ザ": "ざ", "ジ": "じ", "ズ": "ず", "ゼ": "ぜ", "ゾ": "ぞ",
+      "ダ": "だ", "ヂ": "ぢ", "ヅ": "づ", "デ": "で", "ド": "ど",
+      "バ": "ば", "ビ": "び", "ブ": "ぶ", "ベ": "べ", "ボ": "ぼ",
+      // Handakuten
+      "パ": "ぱ", "ピ": "ぴ", "プ": "ぷ", "ペ": "ぺ", "ポ": "ぽ",
+      // Yoon
+      "キャ": "きゃ", "キュ": "きゅ", "キョ": "きょ",
+      "シャ": "しゃ", "シュ": "しゅ", "ショ": "しょ",
+      "チャ": "ちゃ", "チュ": "ちゅ", "チョ": "ちょ",
+      "ニャ": "にゃ", "ニュ": "にゅ", "ニョ": "にょ",
+      "ヒャ": "ひゃ", "ヒュ": "ひゅ", "ヒョ": "ひょ",
+      "ミャ": "みゃ", "ミュ": "みゅ", "ミョ": "みょ",
+      "リャ": "りゃ", "リュ": "りゅ", "リョ": "りょ",
+      "ギャ": "ぎゃ", "ギュ": "ぎゅ", "ギョ": "ぎょ",
+      "ジャ": "じゃ", "ジュ": "じゅ", "ジョ": "じょ",
+      "ビャ": "びゃ", "ビュ": "びゅ", "ビョ": "びょ",
+      "ピャ": "ぴゃ", "ピュ": "ぴゅ", "ピョ": "ぴょ"
+    };
     const gojuon = [
       ["ア", "a"], ["イ", "i"], ["ウ", "u"], ["エ", "e"], ["オ", "o"],
       ["カ", "ka"], ["キ", "ki"], ["ク", "ku"], ["ケ", "ke"], ["コ", "ko"],
@@ -165,7 +197,8 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "letra",
-        examples: [exemplos[caractere] || "-"]
+        examples: [exemplos[caractere] || "-"],
+        hiragana: katakanaToHiragana[caractere] || ""
       })),
       ...dakuten.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -173,7 +206,8 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "dakuten",
-        examples: [exemplos[caractere] || "-"]
+        examples: [exemplos[caractere] || "-"],
+        hiragana: katakanaToHiragana[caractere] || ""
       })),
       ...handakuten.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -181,7 +215,8 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "handakuten",
-        examples: [exemplos[caractere] || "-"]
+        examples: [exemplos[caractere] || "-"],
+        hiragana: katakanaToHiragana[caractere] || ""
       })),
       ...yoon.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -189,7 +224,8 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "yoon",
-        examples: [exemplos[caractere] || "-"]
+        examples: [exemplos[caractere] || "-"],
+        hiragana: katakanaToHiragana[caractere] || ""
       }))
     ];
     return Promise.resolve({

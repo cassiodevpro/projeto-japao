@@ -74,10 +74,10 @@ export default function KatakanaClient() {
                     <div className={styles.cardBack}>
                       <div style={{ fontWeight: "bold", fontSize: "1.5rem", marginBottom: 8 }}>{card.romaji.toUpperCase()}</div>
                       <div style={{ fontSize: "1.1rem", color: "#333", marginBottom: 8 }}>
-                        Exemplo:
+                        Hiragana: <span style={{ fontWeight: 600 }}>{card.hiragana || '-'}</span>
                       </div>
                       <div style={{ fontSize: "1rem", color: "#666" }}>
-                        {card.examples && card.examples.length > 0 ? card.examples[0] : "-"}
+                        Exemplo: {card.examples && card.examples.length > 0 ? card.examples[0] : "-"}
                       </div>
                     </div>
                   </div>
