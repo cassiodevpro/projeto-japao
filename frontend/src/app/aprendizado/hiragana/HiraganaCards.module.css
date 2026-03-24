@@ -47,6 +47,7 @@
   transform: rotateY(180deg);
 }
 
+
 .cardFront,
 .cardBack {
   position: absolute;
@@ -65,6 +66,13 @@
   padding: 20px 12px;
   box-sizing: border-box;
   word-break: break-word;
+}
+
+.cardFront {
+  color: var(--ink);
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .cardBack {
