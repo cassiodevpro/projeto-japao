@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Header from "@/app/components/header";
 import Link from "next/link";
 import { getKanji, Kanji } from "@/app/services/kanji-service";
 import styles from "@/app/aprendizado/hiragana/HiraganaCards.module.css";
+import shared from "@/app/components/shared.module.css";
+import PageShell from "@/app/components/page-shell";
 
 interface CardGroup {
   grupo: string;
@@ -59,15 +60,14 @@ export default function AprendizadoKanji() {
   };
 
   return (
-    <div>
+    <PageShell>
       <Link href="/" style={{ textDecoration: 'none' }}>
-        <button style={{ margin: '18px 0 18px 0', padding: '8px 18px', borderRadius: 8, border: 'none', background: '#b71c1c', color: '#fff', fontWeight: 600, fontSize: 18, cursor: 'pointer', boxShadow: '0 2px 8px #b71c1c22' }}>← Voltar para Home</button>
+        <button className={shared.backButton}>← Voltar para Home</button>
       </Link>
-      <section style={{ background: 'linear-gradient(90deg, #f8fafc 60%, #ffe0e0 100%)', borderRadius: 18, boxShadow: '0 2px 12px #ffe0e055', padding: 24, marginBottom: 36 }}>
-        <Header />
-        <h2 style={{ color: '#b71c1c', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Kanji - Aprendizado</h2>
+      <section className={`${shared.sectionCard} ${shared.kanji}`}>
+        <h2 className={shared.pageHeading} style={{ color: 'var(--kanji-color)' }}>Kanji - Aprendizado</h2>
         {loading && <p>Carregando...</p>}
-        {error && <p style={{ color: "red" }}>Erro: {error}</p>}
+        {error && <p className={shared.errorText}>Erro: {error}</p>}
         {kanjiGroups.map((group, groupIdx) => (
           <div key={group.grupo}>
             <h4 style={{ marginTop: 24 }}>{group.grupo.toUpperCase()}</h4>
@@ -97,6 +97,6 @@ export default function AprendizadoKanji() {
           </div>
         ))}
       </section>
-    </div>
+    </PageShell>
   );
 }

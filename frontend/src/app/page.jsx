@@ -1,8 +1,10 @@
 import styles from "./home.module.css";
 import Link from "next/link";
+import PageShell from "@/app/components/page-shell";
 
 export default function Home() {
   return (
+    <PageShell>
     <div className={styles.homeBg}>
       {/* Noise overlay */}
       <div className={styles.noiseOverlay} aria-hidden="true" />
@@ -54,5 +56,6 @@ export default function Home() {
         </div>
       </main>
     </div>
+    </PageShell>
   );
 }

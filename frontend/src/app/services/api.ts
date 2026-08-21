@@ -42,10 +42,38 @@ export async function apiGet<T>(
       ["びゃ", "bya"], ["びゅ", "byu"], ["びょ", "byo"],
       ["ぴゃ", "pya"], ["ぴゅ", "pyu"], ["ぴょ", "pyo"]
     ];
-    // Exemplos simples
+    // Exemplos completos para todos os hiragana
     const exemplos: Record<string, string> = {
+      // Gojuon
       "あ": "あさ (manhã)", "い": "いぬ (cachorro)", "う": "うみ (mar)", "え": "えき (estação)", "お": "おにぎり (bolinho)",
-      "か": "かさ (guarda-chuva)", "き": "き (árvore)", "く": "くるま (carro)", "け": "けむし (lagarta)", "こ": "こども (criança)"
+      "か": "かさ (guarda-chuva)", "き": "き (árvore)", "く": "くるま (carro)", "け": "けむし (lagarta)", "こ": "こども (criança)",
+      "さ": "さくら (cerejeira)", "し": "しお (sal)", "す": "すいか (melancia)", "せ": "せみ (cigarra)", "そ": "そら (céu)",
+      "た": "たまご (ovo)", "ち": "ちず (mapa)", "つ": "つき (lua)", "て": "てがみ (carta)", "と": "とり (pássaro)",
+      "な": "なつ (verão)", "に": "にんじん (cenoura)", "ぬ": "ぬの (tecido)", "ね": "ねこ (gato)", "の": "のり (alga)",
+      "は": "はな (flor)", "ひ": "ひこうき (avião)", "ふ": "ふね (barco)", "へ": "へや (quarto)", "ほ": "ほし (estrela)",
+      "ま": "まど (janela)", "み": "みかん (tangerina)", "む": "むし (inseto)", "め": "めがね (óculos)", "も": "もも (pêssego)",
+      "や": "やま (montanha)", "ゆ": "ゆき (neve)", "よ": "よる (noite)",
+      "ら": "らいおん (leão)", "り": "りんご (maçã)", "る": "るす (ausência)", "れ": "れいぞうこ (geladeira)", "ろ": "ろうそく (vela)",
+      "わ": "わに (jacaré)", "を": "をとこ (homem, arcaico)", "ん": "ぱん (pão)",
+      // Dakuten
+      "が": "がっこう (escola)", "ぎ": "ぎゅうにゅう (leite)", "ぐ": "ぐんて (luva)", "げ": "げんき (saúde)", "ご": "ごはん (arroz cozido)",
+      "ざ": "ざっし (revista)", "じ": "じてんしゃ (bicicleta)", "ず": "すずめ (pardal)", "ぜ": "ぜんまい (mola)", "ぞ": "ぞう (elefante)",
+      "だ": "だいこん (nabo)", "ぢ": "ぢから (força)", "づ": "つづき (continuação)", "で": "でんわ (telefone)", "ど": "どあ (porta)",
+      "ば": "ばら (rosa)", "び": "びーる (cerveja)", "ぶ": "ぶた (porco)", "べ": "べんとう (marmita)", "ぼ": "ぼうし (chapéu)",
+      // Handakuten
+      "ぱ": "ぱんだ (panda)", "ぴ": "ぴあの (piano)", "ぷ": "ぷーる (piscina)", "ぺ": "ぺん (caneta)", "ぽ": "ぽすと (caixa de correio)",
+      // Yoon (junções)
+      "きゃ": "きゃべつ (repolho)", "きゅ": "きゅうり (pepino)", "きょ": "きょう (hoje)",
+      "しゃ": "しゃしん (foto)", "しゅ": "しゅくだい (lição de casa)", "しょ": "しょうゆ (molho de soja)",
+      "ちゃ": "ちゃわん (tigela)", "ちゅ": "ちゅうごく (China)", "ちょ": "ちょこれーと (chocolate)",
+      "にゃ": "にゃんこ (gatinho)", "にゅ": "にゅういん (hospitalização)", "にょ": "にょろにょろ (serpenteando)",
+      "ひゃ": "ひゃくえん (100 ienes)", "ひゅ": "ひゅうひゅう (assobio do vento)", "ひょ": "ひょう (leopardo)",
+      "みゃ": "みゃく (pulso)", "みゅ": "みゅーじっく (música)", "みょ": "みょうが (gengibre japonês)",
+      "りゃ": "りゃく (abreviação)", "りゅ": "りゅう (dragão)", "りょ": "りょうり (culinária)",
+      "ぎゃ": "ぎゃく (inverso)", "ぎゅ": "ぎゅうどん (prato japonês)", "ぎょ": "ぎょーざ (guioza)",
+      "じゃ": "じゃむ (geleia)", "じゅ": "じゅーす (suco)", "じょ": "じょせい (mulher)",
+      "びゃ": "びゃくや (noite branca)", "びゅ": "びゅっふぇ (buffet)", "びょ": "びょういん (hospital)",
+      "ぴゃ": "ぴあす (brinco)", "ぴゅ": "ぴゅーま (puma)", "ぴょ": "ぴょんぴょん (saltando)"
     };
     let idx = 0;
     const all = [
@@ -55,7 +83,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "gojuon",
-        examples: [exemplos[caractere] || "exemplo"]
+        examples: [exemplos[caractere] || "-"]
       })),
       ...dakuten.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -63,7 +91,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "dakuten",
-        examples: ["exemplo dakuten"]
+        examples: [exemplos[caractere] || "-"]
       })),
       ...handakuten.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -71,7 +99,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "handakuten",
-        examples: ["exemplo handakuten"]
+        examples: [exemplos[caractere] || "-"]
       })),
       ...yoon.map(([caractere, romaji]) => ({
         id: ++idx,
@@ -79,7 +107,7 @@ export async function apiGet<T>(
         romaji,
         grupo: romaji[0],
         tipo: "yoon",
-        examples: ["exemplo yoon"]
+        examples: [exemplos[caractere] || "-"]
       }))
     ];
     return Promise.resolve({

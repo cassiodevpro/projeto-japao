@@ -1,25 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-function Modal({ open, onClose, title, children }: { open: boolean, onClose: () => void, title: string, children: React.ReactNode }) {
-  if (!open) return null;
-  return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.4)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ background: '#fff', borderRadius: 12, padding: 24, minWidth: 320, maxWidth: 700, width: '90vw', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 4px 24px rgba(0,0,0,0.15)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-          <h3 style={{ margin: 0 }}>{title}</h3>
-          <button onClick={onClose} style={{ fontSize: 22, background: 'none', border: 'none', cursor: 'pointer' }}>&times;</button>
-        </div>
-        {children}
-      </div>
-    </div>
-  );
-}
-import Header from "@/app/components/header";
+import { useState, useEffect, type CSSProperties } from "react";
 import Link from "next/link";
 
 import { getNumeros, Numero } from "@/app/services/numeros-service";
 import styles from "@/app/aprendizado/hiragana/HiraganaCards.module.css";
+import shared from "@/app/components/shared.module.css";
+import PageShell from "@/app/components/page-shell";
 
 function splitNumeros(data: Numero[]) {
   const ate19 = data.filter(n => n.numero <= 19);
@@ -77,7 +64,6 @@ export default function AprendizadoNumeros() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [flipped, setFlipped] = useState<Record<string, number | null>>({});
-  const [modal, setModal] = useState<string | null>(null);
 
   useEffect(() => {
     getNumeros()
@@ -93,19 +79,18 @@ export default function AprendizadoNumeros() {
   const { ate19, de20a100 } = splitNumeros(numeros);
 
   return (
-    <div>
+    <PageShell>
       <Link href="/" style={{ textDecoration: 'none' }}>
-        <button style={{ margin: '18px 0 18px 0', padding: '8px 18px', borderRadius: 8, border: 'none', background: '#006064', color: '#fff', fontWeight: 600, fontSize: 18, cursor: 'pointer', boxShadow: '0 2px 8px #00606422' }}>← Voltar para Home</button>
+        <button className={shared.backButton}>← Voltar para Home</button>
       </Link>
-      <Header />
-      <h3>Página de Aprendizado de Números</h3>
+      <h2 className={shared.pageHeading}>Aprendizado de Números</h2>
       {loading && <p>Carregando...</p>}
-      {error && <p style={{ color: "red" }}>Erro: {error}</p>}
+      {error && <p className={shared.errorText}>Erro: {error}</p>}
       {!loading && !error && (
         <>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 36, margin: '32px 0' }}>
-            <section style={{ background: 'linear-gradient(90deg, #f8fafc 60%, #e0e7ff 100%)', borderRadius: 18, boxShadow: '0 2px 12px #e0e7ff55', padding: 24 }}>
-              <h2 style={{ color: '#3b3b7a', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Números de 1 a 19</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <section className={shared.sectionCard} style={{ '--accent': '#3b3b7a' } as CSSProperties}>
+              <h2 className={shared.subHeading}>Números de 1 a 19</h2>
               <div className={styles.cardsGridColumns}>
                 {ate19.map((n, idx) => (
                   <div
@@ -125,8 +110,8 @@ export default function AprendizadoNumeros() {
                 ))}
               </div>
             </section>
-            <section style={{ background: 'linear-gradient(90deg, #f8fafc 60%, #c7f9cc 100%)', borderRadius: 18, boxShadow: '0 2px 12px #c7f9cc55', padding: 24 }}>
-              <h2 style={{ color: '#1b5e20', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Números de 20 a 100 (de 10 em 10)</h2>
+            <section className={shared.sectionCard} style={{ '--accent': '#1b5e20' } as CSSProperties}>
+              <h2 className={shared.subHeading}>Números de 20 a 100 (de 10 em 10)</h2>
               <div className={styles.cardsGridColumns}>
                 {de20a100.map((n, idx) => (
                   <div
@@ -145,8 +130,8 @@ export default function AprendizadoNumeros() {
                 ))}
               </div>
             </section>
-            <section style={{ background: 'linear-gradient(90deg, #f8fafc 60%, #ffe0e0 100%)', borderRadius: 18, boxShadow: '0 2px 12px #ffe0e055', padding: 24 }}>
-              <h2 style={{ color: '#b71c1c', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Dias do mês</h2>
+            <section className={shared.sectionCard} style={{ '--accent': '#b71c1c' } as CSSProperties}>
+              <h2 className={shared.subHeading}>Dias do mês</h2>
               <div className={styles.cardsGridColumns}>
                 {dias.map((d, idx) => (
                   <div
@@ -165,8 +150,8 @@ export default function AprendizadoNumeros() {
                 ))}
               </div>
             </section>
-            <section style={{ background: 'linear-gradient(90deg, #f8fafc 60%, #e0f7fa 100%)', borderRadius: 18, boxShadow: '0 2px 12px #e0f7fa55', padding: 24 }}>
-              <h2 style={{ color: '#006064', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Meses do ano</h2>
+            <section className={shared.sectionCard} style={{ '--accent': '#006064' } as CSSProperties}>
+              <h2 className={shared.subHeading}>Meses do ano</h2>
               <div className={styles.cardsGridColumns}>
                 {meses.map((m, idx) => (
                   <div
@@ -185,8 +170,8 @@ export default function AprendizadoNumeros() {
                 ))}
               </div>
             </section>
-            <section style={{ background: 'linear-gradient(90deg, #f8fafc 60%, #fffde7 100%)', borderRadius: 18, boxShadow: '0 2px 12px #fffde755', padding: 24 }}>
-              <h2 style={{ color: '#fbc02d', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Dias da semana</h2>
+            <section className={shared.sectionCard} style={{ '--accent': '#c9a84c' } as CSSProperties}>
+              <h2 className={shared.subHeading}>Dias da semana</h2>
               <div className={styles.cardsGridColumns}>
                 {diasSemana.map((d, idx) => (
                   <div
@@ -205,8 +190,8 @@ export default function AprendizadoNumeros() {
                 ))}
               </div>
             </section>
-            <section style={{ background: 'linear-gradient(90deg, #f8fafc 60%, #e1bee7 100%)', borderRadius: 18, boxShadow: '0 2px 12px #e1bee755', padding: 24 }}>
-              <h2 style={{ color: '#6a1b9a', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Dinheiro (Ienes)</h2>
+            <section className={shared.sectionCard} style={{ '--accent': '#6a1b9a' } as CSSProperties}>
+              <h2 className={shared.subHeading}>Dinheiro (Ienes)</h2>
               <div className={styles.cardsGridColumns}>
                 {dinheiro.map((d, idx) => (
                   <div
@@ -228,6 +213,6 @@ export default function AprendizadoNumeros() {
           </div>
         </>
       )}
-    </div>
+    </PageShell>
   );
 }

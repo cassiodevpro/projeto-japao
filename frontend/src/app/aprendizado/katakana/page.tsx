@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Header from "@/app/components/header";
 import Link from "next/link";
 import { getKatakana, Katakana } from "@/app/services/katakana-service";
 import styles from "@/app/aprendizado/hiragana/HiraganaCards.module.css";
+import shared from "@/app/components/shared.module.css";
+import PageShell from "@/app/components/page-shell";
 
 
 type KatakanaGroup = {
@@ -48,20 +49,19 @@ export default function KatakanaClient() {
   };
 
   return (
-    <div>
+    <PageShell>
       <Link href="/" style={{ textDecoration: 'none' }}>
-        <button style={{ margin: '18px 0 18px 0', padding: '8px 18px', borderRadius: 8, border: 'none', background: '#1b5e20', color: '#fff', fontWeight: 600, fontSize: 18, cursor: 'pointer', boxShadow: '0 2px 8px #1b5e2022' }}>← Voltar para Home</button>
+        <button className={shared.backButton}>← Voltar para Home</button>
       </Link>
-      <Header />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 36, margin: '32px 0' }}>
-        <section style={{ background: 'rgba(44,74,110,0.08)', borderRadius: 18, boxShadow: '0 2px 12px #2c4a6e22', padding: 24, marginBottom: 0 }}>
-          <h2 style={{ color: 'var(--katakana-color)', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Katakana - Tabela Completa</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <section className={`${shared.sectionCard} ${shared.katakana}`}>
+          <h2 className={shared.pageHeading} style={{ color: 'var(--katakana-color)' }}>Katakana - Tabela Completa</h2>
           {loading && <p>Carregando...</p>}
-          {error && <p style={{ color: "red" }}>Erro: {error}</p>}
+          {error && <p className={shared.errorText}>Erro: {error}</p>}
         </section>
         {groups.map((group) => (
-          <section key={group.tipo} style={{ background: 'rgba(44,74,110,0.04)', borderRadius: 14, boxShadow: '0 2px 8px #2c4a6e11', padding: 18 }}>
-            <h3 style={{ color: 'var(--katakana-color)', fontWeight: 600, fontSize: 20, marginBottom: 14 }}>{tipoLabel[group.tipo] || group.tipo}</h3>
+          <section key={group.tipo} className={`${shared.sectionCard} ${shared.katakana}`}>
+            <h3 className={shared.subHeading} style={{ color: 'var(--katakana-color)' }}>{tipoLabel[group.tipo] || group.tipo}</h3>
             <div className={styles.cardsContainer}>
               {group.cards.map((card, idx) => (
                 <div
@@ -87,6 +87,6 @@ export default function KatakanaClient() {
           </section>
         ))}
       </div>
-    </div>
+    </PageShell>
   );
 }
