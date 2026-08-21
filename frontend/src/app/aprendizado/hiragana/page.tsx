@@ -4,8 +4,10 @@
 
 import { useEffect, useState } from "react";
 import styles from "./HiraganaCards.module.css";
+import shared from "@/app/components/shared.module.css";
 import { getHiragana, Hiragana } from "@/app/services/hiragana-service";
 import Link from "next/link";
+import PageShell from "@/app/components/page-shell";
 
 
 export default function HiraganaCards() {
@@ -39,18 +41,18 @@ export default function HiraganaCards() {
   })).filter(g => g.cards.length > 0);
 
   return (
-    <div>
+    <PageShell>
       <Link href="/" style={{ textDecoration: 'none' }}>
-        <button style={{ margin: '18px 0 18px 0', padding: '8px 18px', borderRadius: 8, border: 'none', background: '#3b3b7a', color: '#fff', fontWeight: 600, fontSize: 18, cursor: 'pointer', boxShadow: '0 2px 8px #3b3b7a22' }}>← Voltar para Home</button>
+        <button className={shared.backButton}>← Voltar para Home</button>
       </Link>
-      <section style={{ background: 'rgba(192,57,43,0.08)', borderRadius: 18, boxShadow: '0 2px 12px #c0392b22', padding: 24, marginBottom: 0 }}>
-        <h2 style={{ color: 'var(--hiragana-color)', fontWeight: 700, fontSize: 26, marginBottom: 18 }}>Hiragana - Tabela Completa</h2>
+      <section className={`${shared.sectionCard} ${shared.hiragana}`}>
+        <h2 className={shared.pageHeading} style={{ color: 'var(--hiragana-color)' }}>Hiragana - Tabela Completa</h2>
         {loading && <p>Carregando...</p>}
-        {error && <p style={{ color: "red" }}>Erro: {error}</p>}
+        {error && <p className={shared.errorText}>Erro: {error}</p>}
       </section>
       {grupos.map((grupo) => (
-        <section key={grupo.tipo} style={{ background: 'rgba(192,57,43,0.04)', borderRadius: 14, boxShadow: '0 2px 8px #c0392b11', padding: 18, margin: '24px 0' }}>
-          <h3 style={{ color: 'var(--hiragana-color)', fontWeight: 600, fontSize: 20, marginBottom: 14 }}>{tipoLabel[grupo.tipo] || grupo.tipo}</h3>
+        <section key={grupo.tipo} className={`${shared.sectionCard} ${shared.hiragana}`}>
+          <h3 className={shared.subHeading} style={{ color: 'var(--hiragana-color)' }}>{tipoLabel[grupo.tipo] || grupo.tipo}</h3>
           <div className={styles.cardsContainer}>
             {grupo.cards.map((item, idx) => (
               <div
@@ -77,6 +79,6 @@ export default function HiraganaCards() {
           </div>
         </section>
       ))}
-    </div>
+    </PageShell>
   );
 }

@@ -1,0 +1,75 @@
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 1.25rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  background: rgba(245, 237, 224, 0.05);
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: "Crimson Pro", Georgia, serif;
+}
+
+.backButton:hover {
+  background: rgba(201, 168, 76, 0.14);
+}
+
+.sectionCard {
+  --accent: var(--gold);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  padding: 1.75rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sectionCard.hiragana { --accent: var(--hiragana-color); }
+.sectionCard.katakana { --accent: var(--katakana-color); }
+.sectionCard.kanji { --accent: var(--kanji-color); }
+.sectionCard.numeros { --accent: var(--accent-numeros, var(--accent)); }
+
+.pageHeading {
+  color: var(--accent, var(--gold));
+  font-family: "Noto Serif JP", serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-bottom: 1.1rem;
+  letter-spacing: 0.02em;
+}
+
+.subHeading {
+  color: var(--accent, var(--gold));
+  font-family: "Noto Serif JP", serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0.9rem;
+}
+
+.errorText {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.placeholderCard {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  .sectionCard {
+    padding: 1.25rem 1rem;
+    border-radius: 12px;
+  }
+
+  .pageHeading {
+    font-size: 1.35rem;
+  }
+}

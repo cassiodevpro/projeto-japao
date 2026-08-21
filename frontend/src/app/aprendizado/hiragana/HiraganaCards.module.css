@@ -82,6 +82,29 @@
   color: var(--ink);
 }
 
+@media (max-width: 480px) {
+  .cardsContainer,
+  .cardsGridColumns {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+    min-width: 100px;
+    min-height: 130px;
+  }
+
+  .cardFront,
+  .cardBack {
+    font-size: 2.1rem;
+    padding: 12px 8px;
+  }
+
+  .cardBack {
+    font-size: 0.95rem;
+  }
+}
+
 /* Cores para cada grupo */
 .a { border-color: #e57373; background: #ffebee; }
 .ka { border-color: #64b5f6; background: #e3f2fd; }
